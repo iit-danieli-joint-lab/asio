@@ -70,7 +70,7 @@ void asio_signal_handler(int signal_number)
   int saved_errno = errno;
   signal_state* state = get_signal_state();
   signed_size_type result = ::write(state->write_descriptor_,
-      &signal_number, sizeof(signal_number));
+      (const char*)&signal_number, sizeof(signal_number));
   (void)result;
   errno = saved_errno;
 #endif // defined(ASIO_WINDOWS)
@@ -99,7 +99,7 @@ public:
 
     int fd = state->read_descriptor_;
     int signal_number = 0;
-    while (::read(fd, &signal_number, sizeof(int)) == sizeof(int))
+    while (::read(fd, (char*)&signal_number, sizeof(int)) == sizeof(int))
       if (signal_number >= 0 && signal_number < max_signal_number)
         signal_set_service::deliver_signal(signal_number);
 

@@ -33,6 +33,15 @@
 # include <string>
 #endif // defined(ASIO_WINDOWS_RUNTIME)
 
+#if defined(__VXWORKS__)
+#include "ioLib.h" // ioctl
+#include "sys/poll.h" // freeaddrinfo
+#include "sockLib.h"
+#include  "hostLib.h"
+#include <unistd.h>
+#endif // defined(__VXWORKS__)
+
+
 #if defined(ASIO_WINDOWS) || defined(__CYGWIN__) \
   || defined(__MACH__) && defined(__APPLE__)
 # if defined(ASIO_HAS_PTHREADS)
@@ -92,7 +101,7 @@ inline socket_type call_accept(SockLenType msghdr::*,
     socket_type s, socket_addr_type* addr, std::size_t* addrlen)
 {
   SockLenType tmp_addrlen = addrlen ? (SockLenType)*addrlen : 0;
-  socket_type result = ::accept(s, addr, addrlen ? &tmp_addrlen : 0);
+  socket_type result = accept(s, addr, addrlen ? &tmp_addrlen : 0);
   if (addrlen)
     *addrlen = (std::size_t)tmp_addrlen;
   return result;
@@ -270,7 +279,7 @@ template <typename SockLenType>
 inline int call_bind(SockLenType msghdr::*,
     socket_type s, const socket_addr_type* addr, std::size_t addrlen)
 {
-  return ::bind(s, addr, (SockLenType)addrlen);
+  return bind(s, addr, (SockLenType)addrlen);
 }
 
 int bind(socket_type s, const socket_addr_type* addr,
@@ -609,7 +618,7 @@ bool non_blocking_connect(socket_type s, asio::error_code& ec)
 int socketpair(int af, int type, int protocol,
     socket_type sv[2], asio::error_code& ec)
 {
-#if defined(ASIO_WINDOWS) || defined(__CYGWIN__)
+#if defined(ASIO_WINDOWS) || defined(__CYGWIN__) || defined(__VXWORKS__)
   (void)(af);
   (void)(type);
   (void)(protocol);

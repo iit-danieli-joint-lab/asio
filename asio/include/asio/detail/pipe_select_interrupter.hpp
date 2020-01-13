@@ -21,6 +21,7 @@
 #if !defined(ASIO_WINDOWS_RUNTIME)
 #if !defined(__CYGWIN__)
 #if !defined(__SYMBIAN32__)
+#if !defined(__VXWORKS__)
 #if !defined(ASIO_HAS_EVENTFD)
 
 #include "asio/detail/push_options.hpp"
@@ -81,6 +82,7 @@ private:
 #endif // defined(ASIO_HEADER_ONLY)
 
 #endif // !defined(ASIO_HAS_EVENTFD)
+#endif // !defined(__VXWORKS__)
 #endif // !defined(__SYMBIAN32__)
 #endif // !defined(__CYGWIN__)
 #endif // !defined(ASIO_WINDOWS_RUNTIME)

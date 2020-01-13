@@ -1027,6 +1027,7 @@
    || defined(__FreeBSD__) \
    || defined(__NetBSD__) \
    || defined(__OpenBSD__) \
+   || defined(__VXWORKS__) \
    || defined(__linux__) \
    || defined(__HAIKU__)
 #   define ASIO_HAS_UNISTD_H 1
