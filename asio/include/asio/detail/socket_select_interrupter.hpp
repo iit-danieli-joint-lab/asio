@@ -86,6 +86,7 @@ private:
 #endif // defined(ASIO_WINDOWS)
        // || defined(__CYGWIN__)
        // || defined(__SYMBIAN32__)
+       // || defined(__VXWORKS__)
 
 #endif // !defined(ASIO_WINDOWS_RUNTIME)
 
